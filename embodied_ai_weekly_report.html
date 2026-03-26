@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>具身智能周报 | 2026.03.19 - 2026.03.26</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --card-bg: #1a1d2e;
+      --card-border: #2a2d3e;
+      --accent: #6366f1;
+      --accent2: #06b6d4;
+      --accent3: #f59e0b;
+      --accent4: #10b981;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --code-bg: #252836;
+      --gradient: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+      --gradient2: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      --gradient3: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      padding: 72px 40px 56px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(99,102,241,.25) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(6,182,212,.2) 0%, transparent 55%),
+                  radial-gradient(ellipse at 60% 80%, rgba(245,158,11,.15) 0%, transparent 50%);
+      z-index: 0;
+    }
+    .hero-badge {
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(99,102,241,.15); border: 1px solid rgba(99,102,241,.4);
+      color: #a5b4fc; padding: 6px 16px; border-radius: 100px;
+      font-size: 13px; font-weight: 500; margin-bottom: 20px;
+    }
+    .hero h1 {
+      position: relative; z-index: 1;
+      font-size: clamp(24px, 4vw, 40px);
+      font-weight: 800; line-height: 1.25;
+      background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .hero .date-badge {
+      position: relative; z-index: 1;
+      font-size: 14px; color: var(--text-muted);
+      display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 32px;
+    }
+    .hero .date-badge span { background: var(--card-bg); border: 1px solid var(--card-border); padding: 4px 14px; border-radius: 6px; }
+
+    /* ── Executive Summary ── */
+    .exec-summary {
+      position: relative; z-index: 1;
+      max-width: 780px; margin: 0 auto;
+      background: linear-gradient(135deg, rgba(99,102,241,.08), rgba(6,182,212,.08));
+      border: 1px solid rgba(99,102,241,.3);
+      border-radius: 16px; padding: 28px 32px;
+      text-align: left;
+    }
+    .exec-summary .label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      color: #a5b4fc; text-transform: uppercase; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .exec-summary p { font-size: 15px; color: var(--text-muted); }
+    .exec-summary strong { color: var(--text); }
+    .keywords {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px;
+    }
+    .kw-tag {
+      font-size: 12px; font-weight: 600; padding: 4px 12px;
+      border-radius: 100px; border: 1px solid;
+    }
+    .kw-tag.purple { color: #a5b4fc; border-color: rgba(99,102,241,.5); background: rgba(99,102,241,.1); }
+    .kw-tag.cyan   { color: #67e8f9; border-color: rgba(6,182,212,.5);  background: rgba(6,182,212,.1);  }
+    .kw-tag.amber  { color: #fcd34d; border-color: rgba(245,158,11,.5); background: rgba(245,158,11,.1); }
+    .kw-tag.green  { color: #6ee7b7; border-color: rgba(16,185,129,.5); background: rgba(16,185,129,.1); }
+    .kw-tag.red    { color: #fca5a5; border-color: rgba(239,68,68,.5);  background: rgba(239,68,68,.1);  }
+
+    /* ── Layout ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* ── Section Header ── */
+    .section-header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 48px 0 24px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 32px;
+    }
+    .section-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+    }
+    .section-icon.purple { background: linear-gradient(135deg,#6366f1,#8b5cf6); }
+    .section-icon.cyan   { background: linear-gradient(135deg,#06b6d4,#0ea5e9); }
+    .section-icon.amber  { background: linear-gradient(135deg,#f59e0b,#ef4444); }
+    .section-header h2 {
+      font-size: 22px; font-weight: 700; color: var(--text);
+    }
+    .section-header p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── Paper Card ── */
+    .paper-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      transition: border-color .2s, transform .2s;
+      position: relative; overflow: hidden;
+    }
+    .paper-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--gradient);
+    }
+    .paper-card:hover { border-color: rgba(99,102,241,.5); transform: translateY(-2px); }
+    .paper-number {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #6366f1;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .paper-card h3 {
+      font-size: 18px; font-weight: 700; color: var(--text);
+      margin-bottom: 12px; line-height: 1.4;
+    }
+    .paper-meta {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;
+    }
+    .meta-tag {
+      font-size: 11px; padding: 3px 10px; border-radius: 6px;
+      background: rgba(99,102,241,.12); color: #a5b4fc; border: 1px solid rgba(99,102,241,.25);
+    }
+    .meta-tag.cs { background: rgba(6,182,212,.1); color: #67e8f9; border-color: rgba(6,182,212,.25); }
+    .section-label {
+      font-size: 11px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 1.5px; margin: 16px 0 8px;
+    }
+    .paper-card p { font-size: 14px; color: var(--text-muted); }
+    .tech-insight {
+      background: var(--code-bg); border-left: 3px solid var(--accent);
+      border-radius: 0 8px 8px 0; padding: 14px 16px;
+      font-size: 13.5px; color: var(--text-muted); margin-top: 14px;
+    }
+    .tech-insight strong { color: var(--text); }
+    .paper-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 16px; padding: 8px 16px; border-radius: 8px;
+      background: rgba(99,102,241,.12); border: 1px solid rgba(99,102,241,.3);
+      color: #a5b4fc; font-size: 13px; font-weight: 500; text-decoration: none;
+      transition: background .15s;
+    }
+    .paper-link:hover { background: rgba(99,102,241,.25); }
+
+    /* ── Architecture figure ── */
+    .arch-figure {
+      margin-top: 20px; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+    .arch-figure img { width: 100%; display: block; }
+    .arch-caption {
+      padding: 10px 14px; font-size: 12px; color: var(--text-muted);
+      background: var(--code-bg); text-align: center;
+    }
+
+    /* ── GitHub Card ── */
+    .github-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 28px 32px; margin-bottom: 24px;
+      transition: border-color .2s, transform .2s;
+      position: relative; overflow: hidden;
+    }
+    .github-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--gradient3);
+    }
+    .github-card:hover { border-color: rgba(16,185,129,.5); transform: translateY(-2px); }
+    .repo-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+    .repo-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: linear-gradient(135deg,#06b6d4,#0ea5e9);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+    }
+    .repo-title { flex: 1; }
+    .repo-title h3 { font-size: 18px; font-weight: 700; color: var(--text); }
+    .repo-title .repo-sub { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .repo-stats {
+      display: flex; gap: 16px; margin-top: 4px; flex-wrap: wrap;
+    }
+    .stat-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 600;
+    }
+    .stat-item.star { color: #fcd34d; }
+    .stat-item.fork { color: #a5b4fc; }
+    .stat-item.update { color: #6ee7b7; }
+    .feature-list {
+      list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 14px;
+    }
+    .feature-list li {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 14px; color: var(--text-muted);
+    }
+    .feature-list li::before {
+      content: '→'; color: var(--accent2); font-weight: 700; flex-shrink: 0;
+    }
+    .dev-value {
+      margin-top: 16px; padding: 14px 16px;
+      background: rgba(16,185,129,.08); border: 1px solid rgba(16,185,129,.2);
+      border-radius: 10px; font-size: 13.5px; color: var(--text-muted);
+    }
+    .dev-value strong { color: #6ee7b7; }
+
+    /* ── Trend Card ── */
+    .trend-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 28px 32px; margin-bottom: 24px;
+      position: relative; overflow: hidden;
+    }
+    .trend-card.demo::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: var(--gradient2);
+    }
+    .trend-card.quote::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: linear-gradient(90deg,#a855f7,#ec4899);
+    }
+    .trend-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 4px 12px; border-radius: 6px; margin-bottom: 12px;
+    }
+    .trend-badge.demo { background: rgba(245,158,11,.12); color: #fcd34d; border: 1px solid rgba(245,158,11,.3); }
+    .trend-badge.company { background: rgba(168,85,247,.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,.3); }
+    .trend-badge.quote { background: rgba(236,72,153,.12); color: #f9a8d4; border: 1px solid rgba(236,72,153,.3); }
+    .trend-card h3 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 12px; line-height: 1.4; }
+    .tech-points { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+    .tech-point {
+      display: flex; gap: 12px; align-items: flex-start;
+      padding: 12px 16px; background: var(--code-bg); border-radius: 10px;
+      font-size: 13.5px; color: var(--text-muted);
+    }
+    .tech-point .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .quote-block {
+      margin: 16px 0; padding: 20px 24px;
+      background: rgba(168,85,247,.06); border-left: 3px solid #a855f7;
+      border-radius: 0 10px 10px 0;
+    }
+    .quote-block .quote-text {
+      font-size: 15px; font-style: italic; color: var(--text);
+      line-height: 1.6; margin-bottom: 10px;
+    }
+    .quote-block .quote-author {
+      font-size: 12px; color: var(--text-muted); font-weight: 600;
+    }
+    .insight-box {
+      margin-top: 16px; padding: 14px 16px;
+      background: rgba(168,85,247,.08); border: 1px solid rgba(168,85,247,.2);
+      border-radius: 10px; font-size: 13.5px; color: var(--text-muted);
+    }
+    .insight-box strong { color: #d8b4fe; }
+
+    /* ── Industry Radar Grid ── */
+    .company-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;
+      margin-top: 24px;
+    }
+    .company-card {
+      background: var(--code-bg); border: 1px solid var(--card-border);
+      border-radius: 12px; padding: 20px;
+    }
+    .company-card .co-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+    }
+    .company-card .co-name { font-size: 15px; font-weight: 700; color: var(--text); }
+    .company-card .co-status {
+      font-size: 11px; padding: 3px 8px; border-radius: 100px; font-weight: 600;
+    }
+    .co-status.hot { background: rgba(239,68,68,.15); color: #fca5a5; }
+    .co-status.progress { background: rgba(16,185,129,.15); color: #6ee7b7; }
+    .co-status.watch { background: rgba(245,158,11,.15); color: #fcd34d; }
+    .company-card p { font-size: 13px; color: var(--text-muted); }
+
+    /* ── Stats Bar ── */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      margin: 40px 0;
+    }
+    @media (max-width: 700px) { .stats-bar { grid-template-columns: repeat(2, 1fr); } }
+    .stat-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 12px; padding: 20px; text-align: center;
+    }
+    .stat-card .big { font-size: 28px; font-weight: 800; }
+    .stat-card .big.purple { color: #a5b4fc; }
+    .stat-card .big.cyan   { color: #67e8f9; }
+    .stat-card .big.amber  { color: #fcd34d; }
+    .stat-card .big.green  { color: #6ee7b7; }
+    .stat-card .label2 { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+    /* ── Timeline ── */
+    .timeline { position: relative; margin-top: 24px; }
+    .timeline-item { display: flex; gap: 20px; margin-bottom: 24px; }
+    .timeline-left { display: flex; flex-direction: column; align-items: center; }
+    .timeline-dot {
+      width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .timeline-dot.purple { background: #6366f1; }
+    .timeline-dot.cyan   { background: #06b6d4; }
+    .timeline-dot.amber  { background: #f59e0b; }
+    .timeline-dot.green  { background: #10b981; }
+    .timeline-dot.red    { background: #ef4444; }
+    .timeline-line { width: 2px; flex: 1; background: var(--card-border); margin-top: 4px; }
+    .timeline-content { flex: 1; padding-bottom: 8px; }
+    .timeline-date { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; }
+    .timeline-content h4 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .timeline-content p { font-size: 13px; color: var(--text-muted); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--card-border); padding: 32px 24px;
+      text-align: center; font-size: 13px; color: var(--text-muted);
+    }
+    footer strong { color: var(--text); }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px; background: var(--card-border); margin: 8px 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .hero { padding: 48px 20px 40px; }
+      .exec-summary { padding: 20px; }
+      .paper-card, .github-card, .trend-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-badge">🤖 具身智能深度周报</div>
+  <h1>商业化清场与算法跃迁并行<br>具身智能正在跨越"有用"的鸿沟</h1>
+  <div class="date-badge">
+    <span>📅 报告周期：2026-03-19 至 2026-03-26</span>
+    <span>📍 总第 Vol.2026-12 期</span>
+  </div>
+
+  <div class="exec-summary">
+    <div class="label">💡 一周导读 · Executive Summary</div>
+    <p>
+      本周具身智能领域呈现<strong>"双轨并进"</strong>格局：学术侧，<strong>VLA推理鲁棒性</strong>与<strong>长视野操控记忆建模</strong>两条技术线同时推进——TAG提出无目标引导机制大幅降低VLA在杂乱场景中的抓错率，Chameleon引入情节记忆架构突破长任务决策瓶颈；工业侧，<strong>行业清场加速</strong>，银河通用完成25亿融资（估值200亿），宇树科技科创板IPO获受理，Figure 03登上白宫舞台。本周的核心关键词是：<strong>端到端可靠性、商业化加速分化、数据工厂崛起</strong>。现实世界的残酷摩擦，正在成为区分技术幻觉与真实能力的最终考官。
+    </p>
+    <div class="keywords">
+      <span class="kw-tag purple">端到端可靠性</span>
+      <span class="kw-tag cyan">VLA推理增强</span>
+      <span class="kw-tag amber">商业化清场</span>
+      <span class="kw-tag green">情节记忆操控</span>
+      <span class="kw-tag red">IPO元年启幕</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     STATS
+════════════════════════════════════════════ -->
+<div class="container">
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="big purple">4</div>
+      <div class="label2">精选ArXiv论文</div>
+    </div>
+    <div class="stat-card">
+      <div class="big cyan">3</div>
+      <div class="label2">热门开源项目</div>
+    </div>
+    <div class="stat-card">
+      <div class="big amber">¥25亿</div>
+      <div class="label2">银河通用单轮融资</div>
+    </div>
+    <div class="stat-card">
+      <div class="big green">200亿+</div>
+      <div class="label2">中国具身独角兽估值</div>
+    </div>
+  </div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 1 · ARXIV
+════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-icon purple">📑</div>
+    <div>
+      <h2>学术前沿：算法演进与范式突破</h2>
+      <p>ArXiv · 本周精选具身智能核心论文解读</p>
+    </div>
+  </div>
+
+  <!-- Paper 1: TAG -->
+  <div class="paper-card">
+    <div class="paper-number">PAPER 01 · cs.CV / cs.RO · 2026-03-25</div>
+    <h3>从"看错目标"到精准接触：TAG 用无目标引导机制根治 VLA 的实例级抓取失误</h3>
+    <div class="paper-meta">
+      <span class="meta-tag">VLA · 推理增强</span>
+      <span class="meta-tag cs">LIBERO / VLABench</span>
+      <span class="meta-tag">推理时干预</span>
+      <span class="meta-tag cs">无需重训</span>
+    </div>
+    <div class="section-label">核心摘要</div>
+    <p>中山大学提出 <strong>TAG（Target-Agnostic Guidance）</strong>，这是一种推理时无需修改模型架构的引导机制。研究团队通过大规模失败案例分析发现，VLA 策略的抓取失误并非来自运动规划错误，而是<strong>实例级语义定位失败</strong>——策略在视觉遮挡或相似物体干扰下，会产生"轨迹可信但目标错误"的幻觉。</p>
+    <div class="tech-insight">
+      <strong>🔬 技术深度解析：</strong> TAG 的核心思路借鉴了图像生成领域的<strong>分类器自由引导（CFG）</strong>。其做法是同时计算两种条件下的策略输出：① 原始观测；② 将目标物体抹除的观测。两者之差形成一个残差"方向向量"，以此强化物体证据在决策中的权重。这个机制的精妙之处在于——它不需要知道目标物体是什么，只需知道"缺少目标物体时策略会怎么变"，即可反向强化。在 LIBERO、LIBERO-Plus、VLABench 三个基准上，TAG 一致降低了杂乱场景中的抓错率和近失误率，且只需最小的训练与推理变更即可接入现有 VLA。
+    </div>
+    <div class="arch-figure">
+      <img src="https://arxiv.org/html/2603.24584v1/extracted/6298244/figure/method_overview.png"
+           alt="TAG架构图" onerror="this.parentElement.style.display='none'"/>
+      <div class="arch-caption">TAG 方法概览：通过对比原始与物体抹除观测的策略差异，构建目标强化引导信号</div>
+    </div>
+    <a class="paper-link" href="https://arxiv.org/abs/2603.24584" target="_blank">
+      📄 ArXiv 原文 → 2603.24584
+    </a>
+  </div>
+
+  <!-- Paper 2: Chameleon -->
+  <div class="paper-card">
+    <div class="paper-number">PAPER 02 · cs.RO / cs.AI · 2026-03-25</div>
+    <h3>机器人也需要"情景记忆"：Chameleon 用几何锚定的多模态记忆栈攻克长视野操控难题</h3>
+    <div class="paper-meta">
+      <span class="meta-tag">情节记忆</span>
+      <span class="meta-tag cs">长视野操控</span>
+      <span class="meta-tag">感知别名</span>
+      <span class="meta-tag cs">UR5e 真机验证</span>
+    </div>
+    <div class="section-label">核心摘要</div>
+    <p>来自新加坡南洋理工大学的研究提出 <strong>Chameleon</strong>，专门解决机器人操控中因遮挡和状态变化引发的<strong>感知别名问题（Perceptual Aliasing）</strong>——即在相同观测下因历史不同而需要执行不同动作的非马尔科夫场景。研究还配套开源了 <strong>Camo-Dataset</strong>，这是首个专注于感知别名下情节记忆的真机 UR5e 数据集。</p>
+    <div class="tech-insight">
+      <strong>🔬 技术深度解析：</strong> Chameleon 的创新在于两点：其一，摒弃语义压缩式记忆（传统方法会丢失关键细节），转而将<strong>几何锚定的多模态 Token</strong> 写入记忆，保留消歧所需的精细感知线索；其二，引入<strong>可微分记忆栈</strong>（differentiable memory stack）替代基于相似度检索的召回机制，实现目标导向的定向回溯，而非"最近邻"式的记忆检索。这两点共同解决了"记的是什么"与"怎么查"的问题。
+    </div>
+    <a class="paper-link" href="https://arxiv.org/abs/2603.24576" target="_blank">
+      📄 ArXiv 原文 → 2603.24576 &nbsp;|&nbsp; 💾 GitHub: gxyes/MARS_Chameleon
+    </a>
+  </div>
+
+  <!-- Paper 3: DreamerAD -->
+  <div class="paper-card">
+    <div class="paper-number">PAPER 03 · cs.LG / cs.RO · 2026-03-25</div>
+    <h3>Diffusion 扩散模型驱动的隐空间世界模型：DreamerAD 让自动驾驶 RL 速度提升 80 倍</h3>
+    <div class="paper-meta">
+      <span class="meta-tag">世界模型</span>
+      <span class="meta-tag cs">潜空间 RL</span>
+      <span class="meta-tag">扩散加速</span>
+      <span class="meta-tag cs">NAVSIM v2 SOTA</span>
+    </div>
+    <div class="section-label">核心摘要</div>
+    <p><strong>DreamerAD</strong> 是首个基于隐空间世界模型的自动驾驶 RL 框架，将扩散采样从 100 步压缩到 1 步（<strong>80x 提速</strong>），同时保留视觉可解释性。在 NavSim v2 上取得 87.7 EPDMS，刷新 SOTA。</p>
+    <div class="tech-insight">
+      <strong>🔬 技术深度解析：</strong> DreamerAD 的三大机制：① <strong>Shortcut Forcing</strong>——通过递归多分辨率步压缩降低采样复杂度；② <strong>自回归稠密奖励模型</strong>——直接在隐表示上操作，实现细粒度信用分配；③ <strong>Gaussian Vocabulary Sampling for GRPO</strong>——将探索约束在物理可行轨迹空间内。值得具身智能社区关注的是：隐空间 RL 的范式与机器人操控中的想象训练（Imagination-based training）高度同源，该工作的方法论迁移价值显著。
+    </div>
+    <a class="paper-link" href="https://arxiv.org/abs/2603.24587" target="_blank">
+      📄 ArXiv 原文 → 2603.24587
+    </a>
+  </div>
+
+  <!-- Paper 4: Latent-WAM -->
+  <div class="paper-card">
+    <div class="paper-number">PAPER 04 · cs.CV / cs.RO · 2026-03-25</div>
+    <h3>仅 1.04 亿参数击败感知无关方法 3.2 EPDMS：Latent-WAM 用空间感知压缩重新定义轻量世界模型</h3>
+    <div class="paper-meta">
+      <span class="meta-tag">世界模型</span>
+      <span class="meta-tag cs">端到端规划</span>
+      <span class="meta-tag">空间压缩</span>
+      <span class="meta-tag cs">NAVSIM v2 / HUGSIM</span>
+    </div>
+    <div class="section-label">核心摘要</div>
+    <p><strong>Latent-WAM</strong> 提出"空间感知压缩世界编码器（SCWE）"从基座模型蒸馏几何知识，并以 <strong>1.04 亿参数</strong>在 NAVSIM v2 达到 89.3 EPDMS（超越前 SOTA 3.2 分）、HUGSIM 达到 28.9 HD-Score。</p>
+    <div class="tech-insight">
+      <strong>🔬 行业启示：</strong> Latent-WAM 的"小模型大效果"再次证明：与其堆砌参数，不如提升<strong>表示压缩的信息密度</strong>。SCWE 从大模型蒸馏几何先验的思路，对机器人操控中的场景理解模块具有直接参考价值——用可学习查询将多视角图像压缩为紧凑 Scene Token，是目前最具可扩展性的视觉编码范式之一。
+    </div>
+    <a class="paper-link" href="https://arxiv.org/abs/2603.24581" target="_blank">
+      📄 ArXiv 原文 → 2603.24581
+    </a>
+  </div>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 2 · GITHUB
+════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-icon cyan">💻</div>
+    <div>
+      <h2>开源生态：开发者工具与基础设施</h2>
+      <p>GitHub · 具身智能工具链与仿真加速器精选</p>
+    </div>
+  </div>
+
+  <!-- Repo 1: LeRobot -->
+  <div class="github-card">
+    <div class="repo-header">
+      <div class="repo-icon">🤗</div>
+      <div class="repo-title">
+        <h3>huggingface / lerobot</h3>
+        <div class="repo-sub">让机器人学习像训练 LLM 一样简单——具身智能的 Hugging Face 时刻</div>
+        <div class="repo-stats">
+          <span class="stat-item star">★ 13.2k</span>
+          <span class="stat-item fork">🍴 1.8k</span>
+          <span class="stat-item update">🟢 本周持续更新</span>
+        </div>
+      </div>
+    </div>
+    <ul class="feature-list">
+      <li><strong>SmolVLA 深度集成：</strong>450M 参数轻量 VLA 模型已完整接入，支持单卡训练与 CPU 推理部署，大幅降低机器人学习门槛</li>
+      <li><strong>SO100/SO101 硬件兼容：</strong>从低成本桌面机械臂到工业级六轴臂，统一的数据采集→训练→推理链路</li>
+      <li><strong>LIBERO 跨域泛化验证：</strong>本周有用户实测纯 SO100 数据训练的模型，在 LIBERO 场景下实现了一定程度的跨臂零样本迁移</li>
+      <li><strong>数据集中心：</strong>内置100+ 开放机器人演示数据集，格式统一，开箱即用</li>
+    </ul>
+    <div class="dev-value">
+      <strong>开发者价值：</strong> LeRobot 正在成为具身智能的"Hugging Face Hub"——模型、数据集、硬件抽象三位一体。对研究者而言，它消除了从算法到真机的工程鸿沟；对创业团队而言，它是快速验证算法可行性的最低成本路径。本周 SmolVLA 的规模持续增加，预示下一阶段将是"小模型、大数据"的平民化具身智能时代。
+    </div>
+    <a class="paper-link" href="https://github.com/huggingface/lerobot" target="_blank" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.3);color:#6ee7b7;">
+      💾 GitHub → huggingface/lerobot
+    </a>
+  </div>
+
+  <!-- Repo 2: Isaac Lab -->
+  <div class="github-card">
+    <div class="repo-header">
+      <div class="repo-icon" style="background:linear-gradient(135deg,#76b900,#00a651);">🟢</div>
+      <div class="repo-title">
+        <h3>isaac-sim / IsaacLab</h3>
+        <div class="repo-sub">NVIDIA 官方统一机器人学习框架——从仿真到真机的全流程加速器</div>
+        <div class="repo-stats">
+          <span class="stat-item star">★ 6.1k</span>
+          <span class="stat-item update">🟢 2026-03-11 重大更新</span>
+        </div>
+      </div>
+    </div>
+    <ul class="feature-list">
+      <li><strong>Omniverse 物理引擎加持：</strong>RTX 级实时光线追踪提供照片级渲染，为 Sim-to-Real 提供更真实的视觉域</li>
+      <li><strong>统一模块化架构：</strong>支持模仿学习、强化学习、运动规划的无缝切换，共享传感器/执行器抽象层</li>
+      <li><strong>3月重大更新：</strong>新增关节控制文档体系，Robot Simulation 模块完整重构，降低 URDF 机器人接入门槛</li>
+      <li><strong>GPU 并行仿真：</strong>单 GPU 可并行运行数千个仿真实例，大幅加速 RL 策略训练</li>
+    </ul>
+    <div class="dev-value">
+      <strong>开发者价值：</strong> IsaacLab 是目前 GPU 加速仿真领域最完整的工业级框架。对于需要大规模 RL 训练的团队（如运动控制、灵巧手策略），它提供了无法忽视的计算效率优势。随着 NVIDIA GTC 2026 后 GR00T 技术栈的持续开放，IsaacLab 的生态价值将持续提升。
+    </div>
+    <a class="paper-link" href="https://github.com/isaac-sim/IsaacLab" target="_blank" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.3);color:#6ee7b7;">
+      💾 GitHub → isaac-sim/IsaacLab
+    </a>
+  </div>
+
+  <!-- Repo 3: Chameleon / MARS -->
+  <div class="github-card">
+    <div class="repo-header">
+      <div class="repo-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444);">🦎</div>
+      <div class="repo-title">
+        <h3>gxyes / MARS_Chameleon</h3>
+        <div class="repo-sub">情节记忆驱动的长视野操控框架——附带首个感知别名机器人数据集</div>
+        <div class="repo-stats">
+          <span class="stat-item update">🟢 本周新开源（论文配套）</span>
+        </div>
+      </div>
+    </div>
+    <ul class="feature-list">
+      <li><strong>Camo-Dataset 开放：</strong>UR5e 真机采集，覆盖情节记忆召回、空间追踪、感知混淆下的序列操控任务</li>
+      <li><strong>即插即用记忆模块：</strong>可接入多种 VLA/BC 策略，提供标准化的记忆写入/读取接口</li>
+      <li><strong>几何感知 Token 编码：</strong>通过 3D 点云与语言特征的联合嵌入，实现高保真情节存储</li>
+    </ul>
+    <div class="dev-value">
+      <strong>开发者价值：</strong> 感知别名问题在现实操控中极为普遍（如从冰箱取物后再放回，同样的画面需要不同操作）。Camo-Dataset 是目前少数专门针对该问题的真机数据集，对研究非马尔科夫操控问题的团队具有重要参考价值。
+    </div>
+    <a class="paper-link" href="https://github.com/gxyes/MARS_Chameleon" target="_blank" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.3);color:#6ee7b7;">
+      💾 GitHub → gxyes/MARS_Chameleon
+    </a>
+  </div>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 3 · TRENDS
+════════════════════════════════════════════ -->
+  <div class="section-header">
+    <div class="section-icon amber">🚀</div>
+    <div>
+      <h2>行业雷达：震撼 Demo 与思想碰撞</h2>
+      <p>产业动向 · 公司进展 · 深度言论</p>
+    </div>
+  </div>
+
+  <!-- Demo 1: Galbot -->
+  <div class="trend-card demo">
+    <div class="trend-badge demo">🎬 震撼 Demo</div>
+    <h3>春晚上没有彩排的那个节目：银河通用 Galbot 的全自主端到端操控到底突破了什么</h3>
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:12px;">
+      2026 年春晚，Galbot 在直播中完成了<strong>盘核桃、捡玻璃碎片、叠衣服、串烤肠</strong>等动作——整个流程无预设程序、无遥控干预。这是中国具身智能历史上首次以"无彩排直播"形式验证全自主操控能力。
+    </p>
+    <div class="tech-points">
+      <div class="tech-point">
+        <span class="icon">🧠</span>
+        <div><strong>AstraBrain 端到端架构：</strong>整合"大脑（任务规划）-小脑（行为控制）-神经控制（执行器反馈）"于单一模型，消除传统三段式架构的信息损耗与响应延迟</div>
+      </div>
+      <div class="tech-point">
+        <span class="icon">✋</span>
+        <div><strong>灵巧手神经动力学：</strong>力学传感反馈实时调整抓取力度，能稳定夹持核桃（易滚动）、玻璃碎片（尖锐易划）、衣物（形变软体）等非标准物体</div>
+      </div>
+      <div class="tech-point">
+        <span class="icon">🗺️</span>
+        <div><strong>纯视觉自主导航：</strong>无需预先建图，依靠视觉+语言指令实现厘米级避障，展示从桌面操控到室内移动的场景无缝切换</div>
+      </div>
+      <div class="tech-point">
+        <span class="icon">🔄</span>
+        <div><strong>仿真→真机迁移路径：</strong>以虚拟环境合成数据为主，真机数据微调为辅，大幅降低数据采集成本，同时保持策略鲁棒性</div>
+      </div>
+    </div>
+    <div class="insight-box" style="background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.2);">
+      <strong style="color:#fcd34d;">行业启示：</strong> "直播即测试"是一种极为苛刻的验证方式——它不允许重试，不允许部分失败，这正是区分实验室能力与产品级能力的关键门槛。银河通用此举实质上是向整个行业宣告：<strong>可靠性，而非能力上限，才是商业化的真正门票</strong>。
+    </div>
+  </div>
+
+  <!-- Demo 2: Figure 03 -->
+  <div class="trend-card demo">
+    <div class="trend-badge demo">🎬 震撼 Demo</div>
+    <h3>Figure 03 走进白宫：当人形机器人开始承载地缘政治叙事，商业化故事就变了</h3>
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:12px;">
+      Figure CEO Brett Adcock 偕 Figure 03 亮相白宫"共同创造未来"峰会，成为美国具身智能的国家级象征。与此同时，Figure 03 展示了在杂乱家庭场景中<strong>自主分拣、整理起居室</strong>的完整 Demo。
+    </p>
+    <div class="tech-points">
+      <div class="tech-point">
+        <span class="icon">👁️</span>
+        <div><strong>感知升级：</strong>帧率 2x，延迟 1/4，掌内摄像头支持伸入橱柜等主相机盲区作业；指尖触觉传感可识别 3g 压力差，区分安全抓握与即将滑落</div>
+      </div>
+      <div class="tech-point">
+        <span class="icon">🏭</span>
+        <div><strong>量产准备：</strong>从 CNC 加工转向压铸/注塑工艺，自建 BotQ 工厂初期年产能 12,000 台，4 年目标 100,000 台</div>
+      </div>
+      <div class="tech-point">
+        <span class="icon">⚡</span>
+        <div><strong>无线充电 + 近连续运行：</strong>脚部感应充电线圈（2kW），支持机器人舰队自主归位充电，为家庭/商业场景 7×24 运营奠基</div>
+      </div>
+    </div>
+    <div class="insight-box" style="background:rgba(245,158,11,.06);border-color:rgba(245,158,11,.2);">
+      <strong style="color:#fcd34d;">行业启示：</strong> Figure 03 的意义不仅在技术，更在叙事层——当人形机器人出现在白宫，它就不再只是一个产品，而是国家战略竞争的筹码。这将进一步拉动美国政府的采购意愿与监管豁免，Figure 的先发优势将被体制化加固。
+    </div>
+  </div>
+
+  <!-- Company Radar -->
+  <div class="trend-card">
+    <div class="trend-badge company">🏢 公司雷达</div>
+    <h3>2026年3月：中国具身智能"清场"加速，百亿独角兽集体冲击资本市场</h3>
+    <div class="company-grid">
+      <div class="company-card">
+        <div class="co-header">
+          <span class="co-name">银河通用 Galbot</span>
+          <span class="co-status hot">🔥 融资创纪录</span>
+        </div>
+        <p>完成25亿元新一轮融资，投后估值超200亿，刷新中国具身智能单轮融资纪录。资方涵盖国家大基金、宁德时代、中石化、上汽集团。</p>
+      </div>
+      <div class="company-card">
+        <div class="co-header">
+          <span class="co-name">宇树科技 Unitree</span>
+          <span class="co-status hot">📈 IPO受理</span>
+        </div>
+        <p>3月20日上交所受理科创板IPO申请，拟募资42亿元，有望成为A股"人形机器人第一股"。2025年人形机器人出货量超5500台。</p>
+      </div>
+      <div class="company-card">
+        <div class="co-header">
+          <span class="co-name">智元机器人</span>
+          <span class="co-status progress">🏭 数据工厂</span>
+        </div>
+        <p>上海建成4000平米数据采集工厂，日产能3万-5万条高质量具身数据。出货量5168台，规模化数据飞轮开始转动。</p>
+      </div>
+      <div class="company-card">
+        <div class="co-header">
+          <span class="co-name">星动纪元</span>
+          <span class="co-status progress">💰 百亿估值</span>
+        </div>
+        <p>完成10亿元融资，估值突破百亿元，专注具身智能算法与本体协同设计。</p>
+      </div>
+      <div class="company-card">
+        <div class="co-header">
+          <span class="co-name">优必选</span>
+          <span class="co-status watch">⚠️ 亏损压力</span>
+        </div>
+        <p>2024年研发投入4.78亿元（占营收36.6%），累计亏损超54亿元。WalkerS与蔚来合作，探索汽车制造场景落地。</p>
+      </div>
+      <div class="company-card">
+        <div class="co-header">
+          <span class="co-name">Figure AI</span>
+          <span class="co-status hot">🇺🇸 白宫亮相</span>
+        </div>
+        <p>Figure 03 登上白宫峰会舞台，展示杂乱家庭清洁Demo。量产目标年产1.2万台，4年累计10万台。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quote Block -->
+  <div class="trend-card quote">
+    <div class="trend-badge quote">💬 深度言论</div>
+    <h3>行业领袖在关注什么？本周具身智能思想碰撞精选</h3>
+
+    <div class="quote-block">
+      <div class="quote-text">
+        "具身智能要真正可用，需要 1000 万小时级别的数据。机器人不像 LLM，互联网上没有那么多高质量的机器人行为数据，我们只能自己造。"
+      </div>
+      <div class="quote-author">— 陈亦伦，它石智航创始人（自研数据采集设备，探索具身数据工厂模式）</div>
+    </div>
+    <div class="insight-box">
+      <strong>行业启示：</strong> 这句话揭示了具身智能与纯软件AI最本质的差异——<strong>数据不可网络爬取，只能物理采集</strong>。谁掌握了高效、规模化的数据采集能力，谁就掌握了下一代具身基座模型的训练基础。这正是为何智元要建"数据工厂"、银河通用要布局"仿真合成"——本质都是在争夺数据飞轮的启动权。
+    </div>
+
+    <div class="quote-block" style="margin-top:16px;">
+      <div class="quote-text">
+        "从春晚火到 GTC，银河通用成为黄仁勋演讲中唯一提及的中国具身智能企业。"
+      </div>
+      <div class="quote-author">— 来源：爱邦机器人 aibangbots.com，NVIDIA GTC 2026 报道</div>
+    </div>
+    <div class="insight-box">
+      <strong>行业启示：</strong> 黄仁勋在 GTC 2026 将银河通用作为全球具身智能技术成熟度的佐证，这不只是一个营销事件——这意味着<strong>NVIDIA 生态链的算力、工具链与品牌背书</strong>将向中国头部具身企业倾斜。对于依赖 Isaac Sim/GR00T 生态的开发者而言，选择与 NVIDIA 深度绑定的团队合作将成为降低技术风险的理性选择。
+    </div>
+  </div>
+
+
+<!-- ═══════════════════════════════════════════
+     TIMELINE
+════════════════════════════════════════════ -->
+  <div class="section-header" style="margin-top:48px;">
+    <div class="section-icon" style="background:linear-gradient(135deg,#6366f1,#ec4899);">📆</div>
+    <div>
+      <h2>本周关键时间线</h2>
+      <p>2026.03.19 — 2026.03.26 重要事件回溯</p>
+    </div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot purple"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-date">2026-03-20</div>
+        <h4>宇树科技 IPO 申请获上交所受理</h4>
+        <p>拟募资 42 亿元，冲击 A 股"人形机器人第一股"，标志中国具身智能进入资本收割期</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot amber"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-date">2026-03-19～22</div>
+        <h4>NVIDIA GTC 2026：银河通用成唯一被提及的中国具身企业</h4>
+        <p>黄仁勋演讲中引用 Galbot 春晚 Demo，具身智能进入全球顶级科技峰会核心叙事</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot cyan"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-date">2026-03-25</div>
+        <h4>TAG、Chameleon 等具身AI核心论文集中发布</h4>
+        <p>VLA 推理鲁棒性与长视野记忆操控两条技术路线同步推进，ArXiv 单日多篇 cs.RO 论文入选</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot green"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-date">2026-03-25</div>
+        <h4>Figure 03 亮相白宫，具身智能进入地缘政治叙事</h4>
+        <p>CEO Brett Adcock 偕 Figure 03 出席峰会，机器人开始承担国家形象展示功能</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot red"></div>
+        <!-- 最后一个不需要时间线 -->
+      </div>
+      <div class="timeline-content">
+        <div class="timeline-date">2026-03-25</div>
+        <h4>36氪报道：具身智能行业正式进入"清场"阶段</h4>
+        <p>融资数量下降31.7%，单笔均值上涨46.8%；资源向头部集中，中小企业现金流承压</p>
+      </div>
+    </div>
+  </div>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+</div>
+
+<footer>
+  <p>
+    <strong>🤖 具身智能深度周报</strong> · 第 Vol.2026-12 期 ·
+    报告周期：2026-03-19 至 2026-03-26
+  </p>
+  <p style="margin-top:8px;">
+    数据来源：ArXiv · GitHub · 36氪 · 晚点 LatePost · 新华网 · figure.ai · 银河通用官方 ·
+    NVIDIA GTC 2026
+  </p>
+  <p style="margin-top:8px; font-size:12px; color:#475569;">
+    本报告由 AI 助手自动采集整理，内容经过人工审核。转载请注明来源。
+  </p>
+</footer>
+
+</body>
+</html>

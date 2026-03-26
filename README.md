@@ -1,70 +1,60 @@
-# 🤖 具身智能前沿速递 · Embodied AI Weekly
+# 具身智能周报 (Embodied AI Weekly)
 
-> 面向具身智能科普博主的一站式前沿信息追踪平台，每月汇聚国内外顶级实验室、明星公司、权威媒体的最新进展。
+[![Weekly Archive](https://github.com/Jessy-Huang/embodied-ai-weekly/actions/workflows/weekly-archive.yml/badge.svg)](https://github.com/Jessy-Huang/embodied-ai-weekly/actions/workflows/weekly-archive.yml)
 
-🔗 **在线访问：** [https://Jessy-Huang.github.io/embodied-ai-weekly](https://Jessy-Huang.github.io/embodied-ai-weekly)
+📊 每周自动追踪具身智能领域的前沿动态，包括 Arxiv 论文、GitHub 热门仓库及各大公司/实验室进展。
 
----
+## 🌐 在线访问
 
-## ✨ 本期亮点（2026年3月）
+- **最新周报**: https://jessy-huang.github.io/embodied-ai-weekly/latest/
+- **历史归档**: https://jessy-huang.github.io/embodied-ai-weekly/archive/
 
-- 🏛️ **政策重磅**：具身智能写入政府工作报告，十五五规划列为六大未来产业
-- 💰 **资本热潮**：开年两月超200亿融资，每天至少5亿涌入，8家公司估值超百亿
-- 🤖 **技术突破**：NVIDIA GR00T N1.6 / π₀ MEM（长时序记忆）/ Genesis 物理引擎
-- 🏭 **产业落地**：宇树春晚首秀，优必选、智元、宇树进入规模量产阶段
+## 📁 目录结构
 
----
+```
+.
+├── .github/workflows/    # GitHub Actions 自动化配置
+├── archive/              # 历史归档（按日期命名）
+│   ├── index.html        # 归档索引页
+│   └── 2026-03-26.html   # 具体日期周报
+├── latest/               # 最新周报
+│   └── index.html        # 当前最新版
+└── README.md             # 本文件
+```
 
-## 📋 内容覆盖
+## 🔄 自动化流程
 
-| 板块 | 内容 |
-|------|------|
-| 🔥 最新动态 | 两会政策、融资动态、产业大事件 |
-| 🌍 国际前沿 | Google DeepMind / NVIDIA / Physical Intelligence / Stanford / Berkeley |
-| 🇨🇳 国内进展 | 清华 / 北大 / 上交 / 浙大 / 中科院 / 北航等顶级机构 |
-| ⚙️ 技术突破 | VLA模型演进 / 物理仿真 / 灵巧操作 / 世界模型 / 运动控制 |
-| 🚀 明星公司 | Tesla / Boston Dynamics / Figure / 宇树 / 智元 / 银河通用 / 优必选 |
-| 📡 信息渠道 | 公众号 / 知乎 / B站 / GitHub / 学术平台推荐 |
+### 每周自动归档
 
----
+- **触发时间**: 每周一早上 8 点 (UTC 00:00)
+- **执行内容**:
+  1. 将 `latest/index.html` 归档到 `archive/YYYY-MM-DD.html`
+  2. 更新归档索引页面
+  3. 自动部署到 GitHub Pages
 
-## 🗓️ 更新历史
+### 手动触发
 
-| 日期 | 版本 | 主要内容 |
-|------|------|----------|
-| 2026-03-14 | v1.0 | 首次发布，涵盖2026年3月全景速递 |
+在 GitHub 仓库页面 → Actions → Weekly Archive and Deploy → Run workflow
 
----
+## 📝 更新周报
 
-## 🤝 如何贡献
+1. 将新的周报 HTML 文件保存为 `latest/index.html`
+2. 提交并推送到 GitHub:
+   ```bash
+   git add latest/index.html
+   git commit -m "Update weekly report for $(date +%Y-%m-%d)"
+   git push
+   ```
+3. GitHub Actions 会自动部署到 Pages
 
-发现了新的前沿工作？欢迎通过以下方式参与：
+## 🚀 首次设置
 
-1. **提交 Issue**：[点击提交](../../issues/new)，描述工作名称、机构、链接及简介
-2. **Pull Request**：Fork 本仓库，修改 `index.html` 后提交 PR
-3. **邮件联系**：有合作意向可通过 GitHub 主页联系
+1. 开启 GitHub Pages:
+   - 进入仓库 Settings → Pages
+   - Source 选择 "GitHub Actions"
 
----
-
-## 📌 收录标准
-
-- ✅ 2025年1月以后的工作
-- ✅ 顶级学术会议（RSS/ICRA/CoRL/CVPR/ICLR/NeurIPS）论文
-- ✅ 知名实验室/公司发布的技术博客或报告
-- ✅ 产业融资、产品发布等重大商业事件
-
----
+2. 完成！等待 Actions 运行完成即可访问
 
 ## 📄 License
 
-[MIT License](LICENSE) · 内容来源均为公开渠道，遵循各原文版权
-
----
-
-<div align="center">
-
-如果本项目对你有帮助，请点击右上角 ⭐ Star！
-
-**具身智能 · 每月更新 · 助力科普创作**
-
-</div>
+MIT License
