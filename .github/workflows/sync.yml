@@ -1,5 +1,10 @@
 name: Sync to Gitee
-on: [push] # 只要 GitHub 有更新就同步，比定时更科学
+
+on:
+  push:
+    branches:
+      - main  # 如果你的默认分支叫 master，请改为 master
+  workflow_dispatch: # 支持在 GitHub 页面手动点击运行
 
 jobs:
   repo-sync:
@@ -8,7 +13,10 @@ jobs:
       - name: Mirror action
         uses: wearerequired/git-mirror-action@master
         env:
+          # 注意：GitHub Settings 里的 Secret 名字必须叫 GITEE_PRIVATE_KEY
           SSH_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
         with:
-          source-repo: "git@github.com:Jessy-Huang/embodied-ai-weekly.git"
+          # 使用 HTTPS 读取 GitHub，无需私钥权限
+          source-repo: "https://github.com/Jessy-Huang/embodied-ai-weekly.git"
+          # 使用 SSH 推送至 Gitee，必须配合私钥
           destination-repo: "git@gitee.com:jessy-huang/embodied-ai-weekly.git"
