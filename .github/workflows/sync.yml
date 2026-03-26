@@ -1,0 +1,14 @@
+name: Sync to Gitee
+on: [push] # 只要 GitHub 有更新就同步，比定时更科学
+
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror action
+        uses: wearerequired/git-mirror-action@master
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
+        with:
+          source-repo: "git@github.com:你的用户名/仓库名.git"
+          destination-repo: "git@gitee.com:你的用户名/仓库名.git"
