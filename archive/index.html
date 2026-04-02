@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>具身智能周报 - 归档</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      color: #fff;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .latest-link {
+      display: block;
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .latest-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+    .archive-list {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+    }
+    .archive-list h2 {
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+    .archive-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .archive-item:last-child {
+      border-bottom: none;
+    }
+    .archive-date {
+      color: #a0a0a0;
+    }
+    .archive-link {
+      color: #00d4ff;
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid #00d4ff;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+    .archive-link:hover {
+      background: #00d4ff;
+      color: #1a1a2e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 具身智能周报归档</h1>
+    <a href="../latest/" class="latest-link">查看最新周报 →</a>
+    <div class="archive-list">
+      <h2>历史归档</h2>
+        <div class="archive-item">
+          <span class="archive-date">📅 2026-04-02</span>
+          <a href="2026-04-02.html" class="archive-link">查看详情</a>
+        </div>
+        <div class="archive-item">
+          <span class="archive-date">📅 2026-03-26</span>
+          <a href="2026-03-26.html" class="archive-link">查看详情</a>
+        </div>
+    </div>
+  </div>
+</body>
+</html>
