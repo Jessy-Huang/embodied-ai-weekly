@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>具身智能一周动态｜第13周综合报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg-primary: #0a0e17;
+    --bg-secondary: #111827;
+    --bg-card: #1a2235;
+    --border: #1e2d45;
+    --text-primary: #e8edf5;
+    --text-secondary: #8b99b0;
+    --text-muted: #4a5568;
+    --accent-purple: #7c3aed;
+    --accent-blue: #3b82f6;
+    --accent-cyan: #06b6d4;
+    --accent-green: #10b981;
+    --accent-amber: #f59e0b;
+    --accent-rose: #f43f5e;
+    --accent-pink: #ec4899;
+    --accent-orange: #f97316;
+    --gradient-hero: linear-gradient(135deg, #1e1040 0%, #0d1a35 50%, #0a2035 100%);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* HEADER */
+  header { background: var(--gradient-hero); padding: 3rem 0 2rem; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); }
+  .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .header-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(124,58,237,0.2); border: 1px solid rgba(124,58,237,0.4); color: #a78bfa; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 14px; }
+  .header-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  header h1 { font-size: 2.2rem; font-weight: 900; background: linear-gradient(135deg, #e8d5ff, #93c5fd, #67e8f9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2; margin-bottom: 10px; }
+  .header-meta { display: flex; gap: 20px; flex-wrap: wrap; font-size: 13px; color: var(--text-secondary); margin-bottom: 1.5rem; }
+  .header-meta span { display: flex; align-items: center; gap: 5px; }
+  .header-meta .val { color: #93c5fd; font-weight: 600; }
+
+  /* STAT BAR */
+  .stat-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+  .stat-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.1rem 1.2rem; text-align: center; transition: transform 0.2s, border-color 0.2s; }
+  .stat-item:hover { transform: translateY(-2px); border-color: var(--accent-purple); }
+  .stat-item .num { font-size: 2rem; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+  .stat-item .num.c-paper { color: #f97316; }
+  .stat-item .num.c-repo { color: #3b82f6; }
+  .stat-item .num.c-dir { color: #7c3aed; }
+  .stat-item .num.c-star { color: #f59e0b; }
+  .stat-item .label { font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+
+  /* NAV TABS */
+  .nav-tabs { display: flex; gap: 4px; background: var(--bg-secondary); padding: 4px; border-radius: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .nav-tabs button { flex: 1; min-width: 100px; padding: 8px 12px; background: transparent; border: none; border-radius: 7px; color: var(--text-secondary); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .nav-tabs button:hover { background: var(--bg-card); color: var(--text-primary); }
+  .nav-tabs button.active { background: var(--accent-purple); color: #fff; }
+
+  /* SECTIONS */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* INTRO GUIDE */
+  .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+  @media (max-width: 768px) { .intro-grid { grid-template-columns: 1fr; } }
+  .quick-nav { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; }
+  .quick-nav h3 { font-size: 15px; color: #e8d5ff; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+  .qn-row { display: flex; gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .qn-row:last-child { border-bottom: none; }
+  .qn-tag { display: inline-flex; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; min-width: 28px; justify-content: center; }
+  .qn-tag.vla { background: rgba(236,72,153,0.2); color: #f472b6; }
+  .qn-tag.ctrl { background: rgba(249,115,22,0.2); color: #fb923c; }
+  .qn-tag.plan { background: rgba(16,185,129,0.2); color: #34d399; }
+  .qn-tag.hri { background: rgba(168,85,247,0.2); color: #c084fc; }
+  .qn-tag.wm { background: rgba(59,130,246,0.2); color: #60a5fa; }
+  .qn-tag.perc { background: rgba(6,182,212,0.2); color: #22d3ee; }
+  .qn-tag.sim { background: rgba(245,158,11,0.2); color: #fbbf24; }
+  .qn-link { color: #93c5fd; text-decoration: none; flex: 1; }
+  .qn-link:hover { text-decoration: underline; }
+  .qn-note { font-size: 11px; color: var(--text-muted); min-width: 50px; text-align: right; }
+
+  /* HIGHLIGHT CARDS */
+  .highlight-cards { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; }
+  .highlight-cards h3 { font-size: 15px; color: #67e8f9; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+  .hl-row { display: flex; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .hl-row:last-child { border-bottom: none; }
+  .hl-rank { font-weight: 900; font-size: 14px; width: 24px; flex-shrink: 0; }
+  .hl-rank.r1 { color: #fbbf24; }
+  .hl-rank.r2 { color: #9ca3af; }
+  .hl-rank.r3 { color: #cd7f32; }
+  .hl-type { padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; background: var(--accent-blue); color: #fff; height: fit-content; align-self: center; }
+  .hl-type.arxiv { background: #f97316; }
+  .hl-type.github { background: #3b82f6; }
+  .hl-text { flex: 1; }
+  .hl-title { color: var(--text-primary); font-weight: 600; }
+  .hl-desc { color: var(--text-secondary); font-size: 12px; }
+
+  /* CHARTS SECTION */
+  .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+  @media (max-width: 768px) { .charts-grid { grid-template-columns: 1fr; } }
+  .chart-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; }
+  .chart-card h3 { font-size: 14px; color: var(--text-primary); margin-bottom: 1rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+  .chart-wrap { position: relative; height: 260px; }
+  .chart-wrap canvas { max-height: 260px; }
+
+  /* TREND INSIGHTS */
+  .trend-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; margin-bottom: 2rem; }
+  .trend-section h3 { font-size: 15px; color: #e8d5ff; margin-bottom: 1.2rem; font-weight: 700; }
+  .trend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+  .trend-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; position: relative; overflow: hidden; }
+  .trend-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; border-radius: 3px 0 0 3px; }
+  .trend-card.c1::before { background: #f97316; }
+  .trend-card.c2::before { background: #7c3aed; }
+  .trend-card.c3::before { background: #10b981; }
+  .trend-card.c4::before { background: #f43f5e; }
+  .trend-card.c5::before { background: #3b82f6; }
+  .trend-card h4 { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+  .trend-card p { font-size: 12px; color: var(--text-secondary); }
+  .trend-card .trend-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
+  .trend-card .t-tag { padding: 2px 8px; border-radius: 4px; font-size: 10px; background: rgba(255,255,255,0.08); color: var(--text-secondary); border: 1px solid rgba(255,255,255,0.1); }
+
+  /* PAPER / REPO SECTIONS */
+  .paper-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 1.5rem; overflow: hidden; }
+  .paper-section-header { padding: 1rem 1.5rem; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: background 0.2s; }
+  .paper-section-header:hover { background: rgba(255,255,255,0.03); }
+  .dir-icon { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .dir-info { flex: 1; }
+  .dir-info h2 { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+  .dir-info p { font-size: 12px; color: var(--text-secondary); }
+  .dir-count { background: var(--bg-secondary); border: 1px solid var(--border); padding: 3px 10px; border-radius: 12px; font-size: 12px; color: var(--text-secondary); }
+  .dir-arrow { color: var(--text-muted); transition: transform 0.3s; font-size: 12px; }
+  .paper-section.expanded .dir-arrow { transform: rotate(90deg); }
+  .paper-section-body { display: none; padding: 0 1.5rem 1.5rem; }
+  .paper-section.expanded .paper-section-body { display: block; }
+
+  .paper-card { border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 10px; transition: border-color 0.2s; background: rgba(255,255,255,0.02); }
+  .paper-card:hover { border-color: rgba(124,58,237,0.5); }
+  .paper-card:last-child { margin-bottom: 0; }
+  .paper-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+  .paper-title { flex: 1; font-size: 13px; font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+  .paper-badge { padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; background: rgba(124,58,237,0.2); color: #a78bfa; border: 1px solid rgba(124,58,237,0.3); white-space: nowrap; flex-shrink: 0; }
+  .paper-badge.star { background: rgba(245,158,11,0.2); color: #fbbf24; border-color: rgba(245,158,11,0.3); }
+  .paper-meta { font-size: 11px; color: var(--text-muted); margin-bottom: 5px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .paper-meta .id { color: #60a5fa; font-family: monospace; }
+  .paper-meta .author { color: var(--text-secondary); }
+  .paper-contrib { font-size: 12px; color: var(--text-secondary); background: rgba(255,255,255,0.03); border-radius: 6px; padding: 8px 10px; border-left: 3px solid var(--accent-purple); }
+  .paper-contrib strong { color: #a78bfa; }
+
+  .repo-card { border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 10px; background: rgba(255,255,255,0.02); transition: border-color 0.2s; }
+  .repo-card:hover { border-color: rgba(59,130,246,0.5); }
+  .repo-card .repo-top { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .repo-card .repo-name { flex: 1; font-size: 13px; font-weight: 700; color: #60a5fa; text-decoration: none; }
+  .repo-card .repo-name:hover { text-decoration: underline; }
+  .repo-card .repo-stars { font-size: 13px; font-weight: 700; color: #f59e0b; white-space: nowrap; }
+  .repo-card .repo-desc { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+  .repo-card .repo-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+  .repo-tag { padding: 2px 8px; border-radius: 4px; font-size: 10px; background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
+
+  /* SECTION DIVIDER */
+  .section-divider { display: flex; align-items: center; gap: 12px; margin: 2rem 0 1.5rem; }
+  .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .section-divider span { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 2rem 0; color: var(--text-muted); font-size: 12px; border-top: 1px solid var(--border); margin-top: 2rem; }
+  footer a { color: #60a5fa; text-decoration: none; }
+
+  /* OPEN ISSUES */
+  .issue-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem; }
+  .issue-card { background: rgba(244,63,94,0.05); border: 1px solid rgba(244,63,94,0.2); border-radius: 10px; padding: 1rem 1.2rem; }
+  .issue-card h4 { font-size: 13px; color: #f87171; margin-bottom: 6px; font-weight: 700; }
+  .issue-card p { font-size: 12px; color: var(--text-secondary); }
+  .issue-card .source { font-size: 11px; color: var(--text-muted); margin-top: 5px; font-family: monospace; }
+
+  /* SCROLL TOP */
+  .scroll-top { position: fixed; bottom: 2rem; right: 2rem; width: 40px; height: 40px; border-radius: 50%; background: var(--accent-purple); color: #fff; border: none; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0.8; transition: opacity 0.2s; z-index: 100; }
+  .scroll-top:hover { opacity: 1; }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.5rem; }
+    .stat-bar { grid-template-columns: repeat(2, 1fr); }
+    .nav-tabs button { min-width: 80px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-badge"><span class="dot"></span> LIVE · 2026年4月2日更新</div>
+    <h1>具身智能一周动态｜第13周综合报告</h1>
+    <div class="header-meta">
+      <span>📅 数据范围：2026.03.26 — 04.02</span>
+      <span>📄 arXiv 论文 <span class="val">31篇</span></span>
+      <span>🐙 GitHub 仓库 <span class="val">30+</span></span>
+      <span>🗂️ 覆盖方向 <span class="val">7个</span></span>
+    </div>
+    <div class="stat-bar">
+      <div class="stat-item"><div class="num c-paper">31</div><div class="label">arXiv 论文</div></div>
+      <div class="stat-item"><div class="num c-repo">28.4k</div><div class="label">最高⭐（GENESIS）</div></div>
+      <div class="stat-item"><div class="num c-dir">9</div><div class="label">VLA 论文</div></div>
+      <div class="stat-item"><div class="num c-star">2.9k+</div><div class="label">VLA 列表⭐</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <button class="active" onclick="showTab('overview')">📊 总览与导读</button>
+  <button onclick="showTab('charts')">📈 统计图表</button>
+  <button onclick="showTab('arxiv')">📄 arXiv 论文</button>
+  <button onclick="showTab('github')">🐙 GitHub 项目</button>
+  <button onclick="showTab('insights')">💡 核心洞察</button>
+</div>
+
+<!-- ===== TAB 1: OVERVIEW ===== -->
+<div class="section active" id="tab-overview">
+  <!-- Quick Nav + Highlights -->
+  <div class="intro-grid">
+    <div class="quick-nav">
+      <h3>🗺️ 快速导航（论文方向）</h3>
+      <div class="qn-row"><span class="qn-tag vla">9</span><a href="#d5" class="qn-link" onclick="expandDir('d5')">VLA（具身智能体与大模型）</a><span class="qn-note">⭐最热</span></div>
+      <div class="qn-row"><span class="qn-tag ctrl">9</span><a href="#d3" class="qn-link" onclick="expandDir('d3')">具身控制与操作</a><span class="qn-note">热门</span></div>
+      <div class="qn-row"><span class="qn-tag plan">5</span><a href="#d2" class="qn-link" onclick="expandDir('d2')">具身决策与规划</a><span class="qn-note">LLM</span></div>
+      <div class="qn-row"><span class="qn-tag hri">5</span><a href="#d7" class="qn-link" onclick="expandDir('d7')">人机交互</a><span class="qn-note">新范式</span></div>
+      <div class="qn-row"><span class="qn-tag wm">4</span><a href="#d4" class="qn-link" onclick="expandDir('d4')">世界模型与RL</a><span class="qn-note">实用化</span></div>
+      <div class="qn-row"><span class="qn-tag perc">2</span><a href="#d1" class="qn-link" onclick="expandDir('d1')">具身感知</a><span class="qn-note">VLM局限</span></div>
+      <div class="qn-row"><span class="qn-tag sim">2</span><a href="#d6" class="qn-link" onclick="expandDir('d6')">仿真、数据与平台</a><span class="qn-note">GENESIS</span></div>
+    </div>
+    <div class="highlight-cards">
+      <h3>🏆 本周 Top 5 必读</h3>
+      <div class="hl-row"><span class="hl-rank r1">①</span><span class="hl-type arxiv">论文</span><div class="hl-text"><div class="hl-title">DIAL</div><div class="hl-desc">System-2潜在世界建模+System-1动作解码，10x少示范达到SOTA</div></div></div>
+      <div class="hl-row"><span class="hl-rank r2">②</span><span class="hl-type arxiv">论文</span><div class="hl-text"><div class="hl-title">GENESIS</div><div class="hl-desc">28.4k⭐，生成式具身AI学习世界，开创仿真新范式</div></div></div>
+      <div class="hl-row"><span class="hl-rank r3">③</span><span class="hl-type arxiv">论文</span><div class="hl-text"><div class="hl-title">FocusVLA</div><div class="hl-desc">揭示VLA瓶颈在视觉信息利用方式，模态级联+焦点注意力</div></div></div>
+      <div class="hl-row"><span class="hl-rank r1">④</span><span class="hl-type github">项目</span><div class="hl-text"><div class="hl-title">Awesome-Embodied-AI-Safety</div><div class="hl-desc">400+论文安全综述，安全从隐到显</div></div></div>
+      <div class="hl-row"><span class="hl-rank r2">⑤</span><span class="hl-type arxiv">论文</span><div class="hl-text"><div class="hl-title">MMaDA-VLA</div><div class="hl-desc">统一离散扩散VLA，LIBERO 98.0%，刷新SOTA</div></div></div>
+    </div>
+  </div>
+
+  <!-- Trend summary cards -->
+  <div class="section-divider"><span>本周核心趋势</span></div>
+  <div class="trend-grid">
+    <div class="trend-card c1">
+      <h4>🔥 VLA 从"暴力扩展"转向"精细设计"</h4>
+      <p>DIAL/FocusVLA/Fast-dVLA三篇指向：下一波VLA突破来自架构设计，而非增大模型参数</p>
+      <div class="trend-tags"><span class="t-tag">DIAL</span><span class="t-tag">FocusVLA</span><span class="t-tag">Fast-dVLA</span></div>
+    </div>
+    <div class="trend-card c2">
+      <h4>🌊 扩散策略全链路渗透</h4>
+      <p>从动作生成→运动先验→世界模型→共享autonomy→模仿学习，扩散成为具身"通用语言"</p>
+      <div class="trend-tags"><span class="t-tag">RDT-1B</span><span class="t-tag">DFM-VLA</span><span class="t-tag">FlowRL</span></div>
+    </div>
+    <div class="trend-card c3">
+      <h4>🛡️ 具身AI安全从隐到显</h4>
+      <p>VLM affordance gap实证研究 + 400+论文安全综述 + DID-SAFETY-SYSTEM，安全成独立方向</p>
+      <div class="trend-tags"><span class="t-tag">Safety</span><span class="t-tag">VLM Limits</span><span class="t-tag">综述</span></div>
+    </div>
+    <div class="trend-card c4">
+      <h4>🤖 人形机器人成为数据效率主战场</h4>
+      <p>Unitree G1、GR1等通用形态成为验证少样本/零样本/跨任务方法的最佳载体</p>
+      <div class="trend-tags"><span class="t-tag">Unitree G1</span><span class="t-tag">GR1</span><span class="t-tag">DIAL</span></div>
+    </div>
+    <div class="trend-card c5">
+      <h4>✋ 触觉+世界模型成为新组合</h4>
+      <p>OmniVTA/LOME/TAG三者指向：多模态感知→世界模型→精细控制闭环</p>
+      <div class="trend-tags"><span class="t-tag">OmniVTA</span><span class="t-tag">LOME</span><span class="t-tag">TAG</span></div>
+    </div>
+  </div>
+
+  <!-- Open Issues -->
+  <div class="section-divider"><span>⚠️ 开放问题</span></div>
+  <div class="issue-grid">
+    <div class="issue-card">
+      <h4>VLA 指令改写鲁棒性</h4>
+      <p>LIBERO-Para发现7种VLA均有22~52pp性能下降，80~96%失败源于规划层面</p>
+      <div class="source">→ LIBERO-Para (2603.28301)</div>
+    </div>
+    <div class="issue-card">
+      <h4>触觉在数据有限regime成为噪声</h4>
+      <p>Active Stereo实验：14种传感器组合，简单主动双目（87.5%）胜过多传感器配置</p>
+      <div class="source">→ Active Stereo (2603.28422)</div>
+    </div>
+    <div class="issue-card">
+      <h4>VLM affordance gap结构性问题</h4>
+      <p>18个VLM对比2000+人类，affordance缺陷无法通过prompt工程或更新版本解决</p>
+      <div class="source">→ Limits of VLM (2603.26589)</div>
+    </div>
+    <div class="issue-card">
+      <h4>VLA 后训练路线之争</h4>
+      <p>RL vs SFT vs 蒸馏各有优劣，VLA-OPD尝试融合但尚未定论</p>
+      <div class="source">→ VLA-OPD (2603.26666)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 2: CHARTS ===== -->
+<div class="section" id="tab-charts">
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>📊 arXiv 论文方向分布（31篇）</h3>
+      <div class="chart-wrap"><canvas id="pieChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>📈 GitHub 经典仓库星标对比</h3>
+      <div class="chart-wrap"><canvas id="barChart"></canvas></div>
+    </div>
+  </div>
+  <div class="chart-card" style="margin-bottom: 1.5rem;">
+    <h3>📅 arXiv 论文每日发表趋势（3.26~4.2）</h3>
+    <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ===== TAB 3: ARXIV ===== -->
+<div class="section" id="tab-arxiv">
+  <p style="color:var(--text-secondary);font-size:13px;margin-bottom:1.5rem;">点击各方向标题展开/收起论文列表。共收录 <strong style="color:#f97316">31篇</strong> 论文。</p>
+
+  <!-- D1 -->
+  <div class="paper-section" id="d1" onclick="toggleDir(this)">
+    <div class="paper-section-header">
+      <div class="dir-icon" style="background:rgba(6,182,212,0.15);color:#22d3ee;">🧠</div>
+      <div class="dir-info"><h2>方向一：具身感知与场景理解</h2><p>egocentric · affordance · semantic mapping · 3D scene graph</p></div>
+      <span class="dir-count">2篇</span>
+      <span class="dir-arrow">▶</span>
+    </div>
+    <div class="paper-section-body">
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">The Limits of Learning from Pictures and Text: Vision-Language Models and Embodied Scene Understanding</span><span class="paper-badge star">⭐必读</span></div><div class="paper-meta"><span class="id">2603.26589</span><span class="author">Gillian Rosenberg et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>对比18个VLM与2000+人类，发现VLM在affordance任务上存在<strong>结构性缺陷</strong>，视频/文本数据无法解决，揭示缺乏具身经验是根本原因。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">OVI-MAP: Open-Vocabulary Instance-Semantic Mapping</span></div><div class="paper-meta"><span class="id">2603.26541</span><span class="author">Zilong Deng, Marc Pollefeys et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>将3D实例重建与语义推理解耦，VLM仅从少量视图提取语义特征，实现实时零样本开放词汇建图，优于现有方法。</div></div>
+    </div>
+  </div>
+
+  <!-- D2 -->
+  <div class="paper-section" id="d2" onclick="toggleDir(this)">
+    <div class="paper-section-header">
+      <div class="dir-icon" style="background:rgba(16,185,129,0.15);color:#34d399;">🗺️</div>
+      <div class="dir-info"><h2>方向二：具身决策与规划</h2><p>embodied planning · LLM robot · TAMP · code as policies · long-horizon</p></div>
+      <span class="dir-count">5篇</span>
+      <span class="dir-arrow">▶</span>
+    </div>
+    <div class="paper-section-body">
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">DreamControl-v2: Simpler and Scalable Autonomous Humanoid Skills via Trainable Guided Diffusion Priors</span><span class="paper-badge star">⭐人形</span></div><div class="paper-meta"><span class="id">2604.00202</span><span class="author">Sudarshan Harithas et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>在人形运动空间直接训练引导扩散先验，多样化数据聚合到统一具身空间，解决长时程规划难题。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Long-Horizon Geometry-Aware Navigation among Polytopes via MILP-MPC and Minkowski-Based CBFs</span></div><div class="paper-meta"><span class="id">2604.00162</span><span class="author">Yi-Hsuan Chen et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>MILP + Minkowski差空间CBF，实现多面体机器人在非凸环境中的长时程安全导航。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Hybrid Framework for Robotic Manipulation: Integrating Reinforcement Learning and Large Language Models</span></div><div class="paper-meta"><span class="id">2603.30022</span><span class="author">Md Saad et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>LLM负责高层任务规划，RL负责低层控制，Franka Panda验证性能提升。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">osmAG-Nav: A Hierarchical Semantic Topometric Navigation Stack for Robust Lifelong Indoor Autonomy</span><span class="paper-badge star">⭐开源</span></div><div class="paper-meta"><span class="id">2603.28271</span><span class="author">Yongqi Zhang et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>开源ROS2分层语义拓扑导航栈，多楼层长期定位稳定性。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Spectral Decomposition of Inverse Dynamics for Fast Exploration in Model-Based Manipulation</span></div><div class="paper-meta"><span class="id">2603.27796</span><span class="author">Solvin Sigurdson, Joel Burdick</span></div><div class="paper-contrib"><strong>核心贡献：</strong>对逆动力学方程谱分解，接触密集场景实时长时程规划。</div></div>
+    </div>
+  </div>
+
+  <!-- D3 -->
+  <div class="paper-section" id="d3" onclick="toggleDir(this)">
+    <div class="paper-section-header">
+      <div class="dir-icon" style="background:rgba(249,115,22,0.15);color:#fb923c;">🤖</div>
+      <div class="dir-info"><h2>方向三：具身控制与操作</h2><p>diffusion policy · imitation learning · dexterous manipulation · visuomotor</p></div>
+      <span class="dir-count">9篇</span>
+      <span class="dir-arrow">▶</span>
+    </div>
+    <div class="paper-section-body">
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">A Physical Imitation Learning Pipeline for Energy-Efficient Quadruped Locomotion Assisted by Parallel Elastic Joints</span></div><div class="paper-meta"><span class="id">2604.00611</span><span class="author">Huyue Ma et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>RL策略蒸馏到被动弹性关节（PEJ），平地87%机械功率卸载到PEJ，崎岖地形18%。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Multi-Camera View Scaling for Data-Efficient Robot Imitation Learning</span><span class="paper-badge star">⭐数据效率</span></div><div class="paper-meta"><span class="id">2604.00557</span><span class="author">Yichen Xie et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>多相机同步视角生成伪示范，数据效率和视角泛化双提升。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Feel Robot Feels: Tactile Feedback Array Glove for Dexterous Manipulation</span></div><div class="paper-meta"><span class="id">2603.28542</span><span class="author">Feiyu Jia, Jiangmiao Pang et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>TAG系统21-DoF手势捕捉（误差<1°）+32致动器/指触觉阵列，触觉在环遥操作。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Active Stereo-Camera Outperforms Multi-Sensor Setup in ACT Imitation Learning for Humanoid Manipulation</span><span class="paper-badge star">⭐反直觉</span></div><div class="paper-meta"><span class="id">2603.28422</span><span class="author">Robin Kühn et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>Unitree G1上14种传感器组合评测，<strong>简单主动双目87.5%胜出</strong>，数据有限时触觉反而是噪声。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">ProgressVLA: Progress-Guided Diffusion Policy for Vision-Language Robotic Manipulation</span></div><div class="paper-meta"><span class="id">2603.27670</span><span class="author">Hongyu Yan, Yadong Mu et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>进度估计+逆动力学世界模型，解决VLA长程任务自适应终止问题。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Robotic Dexterous Manipulation via Anisotropic Friction Modulation using Passive Rollers</span></div><div class="paper-meta"><span class="id">2603.27452</span><span class="author">Ethan Fisk, Shenli Yuan et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>被动滚轮指尖可调制摩擦和约束方向，使标准爪手实现滑动/枢转等困难操作。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">FlowRL: A Taxonomy and Modular Framework for Reinforcement Learning with Diffusion Policies</span><span class="paper-badge star">⭐基准</span></div><div class="paper-meta"><span class="id">2603.27450</span><span class="author">Chenxiao Gao, Bo Dai et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>扩散策略RL系统性分类学，模块化JAX开源基准。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Addressing Ambiguity in Imitation Learning through Product of Experts based Negative Feedback</span></div><div class="paper-meta"><span class="id">2603.26467</span><span class="author">John Bateman, Jihong Zhu et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>PoE负反馈从次优示范和失败中学习，模糊任务成功率+90%（模拟）/50%（真机）。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Towards Embodied AI with MuscleMimic: Unlocking Full-Body Musculoskeletal Motor Learning at Scale</span><span class="paper-badge star">⭐规模</span></div><div class="paper-meta"><span class="id">2603.25544</span><span class="author">Chengkun Li, Alexander Mathis et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>支持126~416肌肉GPU并行仿真，策略在真实肌肉控制下复现人类运动模式。</div></div>
+    </div>
+  </div>
+
+  <!-- D4 -->
+  <div class="paper-section" id="d4" onclick="toggleDir(this)">
+    <div class="paper-section-header">
+      <div class="dir-icon" style="background:rgba(59,130,246,0.15);color:#60a5fa;">🌍</div>
+      <div class="dir-info"><h2>方向四：具身强化学习与世界模型</h2><p>world model · embodied RL · dreamer · sim-to-real · model-based RL</p></div>
+      <span class="dir-count">4篇</span>
+      <span class="dir-arrow">▶</span>
+    </div>
+    <div class="paper-section-body">
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">HCLSM: Hierarchical Causal Latent State Machines for Object-Centric World Modeling</span></div><div class="paper-meta"><span class="id">2603.29090</span><span class="author">Jaber Jaber, Osama Jaber</span></div><div class="paper-contrib"><strong>核心贡献：</strong>物体分解+分层因果+结构学习，PushT上低MSE预测。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">LOME: Learning Human-Object Manipulation with Action-Conditioned Egocentric World Model</span></div><div class="paper-meta"><span class="id">2603.27449</span><span class="author">Quankai Gao, Yue Wang et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>自我中心视频世界模型，文本+人体动作→人-物交互视频，适用于AR/VR和机器人训练。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Persistent Robot World Models: Stabilizing Multi-Step Rollouts via Reinforcement Learning</span></div><div class="paper-meta"><span class="id">2603.25685</span><span class="author">Jai Bardhan, Josef Sivic, Vladimir Petrik</span></div><div class="paper-contrib"><strong>核心贡献：</strong>RL后训练解决世界模型多步预测误差累积问题，提升DROID数据集rollout保真度。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">OmniVTA: Visuo-Tactile World Modeling for Contact-Rich Robotic Manipulation</span><span class="paper-badge star">⭐触觉</span></div><div class="paper-meta"><span class="id">2603.19201</span><span class="author">Yuhang Zheng, Songen Gu et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>视触觉世界模型+60Hz反射控制器，对未见物体和几何配置强泛化。</div></div>
+    </div>
+  </div>
+
+  <!-- D5 -->
+  <div class="paper-section" id="d5" onclick="toggleDir(this)">
+    <div class="paper-section-header">
+      <div class="dir-icon" style="background:rgba(236,72,153,0.15);color:#f472b6;">🧩</div>
+      <div class="dir-info"><h2>方向五：VLA（具身智能体与大模型）</h2><p>VLA · vision-language-action · RT · Octo · OpenVLA · PaLM-E</p></div>
+      <span class="dir-count">9篇</span>
+      <span class="dir-arrow">▶</span>
+    </div>
+    <div class="paper-section-body">
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">DIAL: Decoupling Intent and Action via Latent World Modeling for End-to-End VLA</span><span class="paper-badge star">⭐⭐必读</span></div><div class="paper-meta"><span class="id">2603.29844</span><span class="author">Yi Chen, Xihui Liu et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>System-2潜在世界建模+System-1动作解码，10x更少示范达到SOTA，真实人形机器人零样本泛化。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">FocusVLA: Focused Visual Utilization for Vision-Language-Action Models</span><span class="paper-badge star">⭐⭐必读</span></div><div class="paper-meta"><span class="id">2603.28740</span><span class="author">Yichi Zhang et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>揭示VLA瓶颈在视觉信息利用方式而非表征质量，模态级联+焦点注意力动态选择任务相关视觉块。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">LIBERO-Para: A Diagnostic Benchmark and Metrics for Paraphrase Robustness in VLA Models</span></div><div class="paper-meta"><span class="id">2603.28301</span><span class="author">Chanyoung Kim et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>首个VLA指令改写鲁棒性基准，7种VLA配置均有22~52pp性能下降，80~96%失败源于规划层面。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">VLA-OPD: Bridging Offline SFT and Online RL for Vision-Language-Action Models via On-Policy Distillation</span></div><div class="paper-meta"><span class="id">2603.26666</span><span class="author">Zhide Zhong, Haoang Li et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>专家蒸馏+反向KL目标，RL效率+SFT鲁棒性兼得。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Realtime-VLA V2: Learning to Run VLAs Fast, Smooth, and Accurate</span></div><div class="paper-meta"><span class="id">2603.26360</span><span class="author">Chen Yang et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>VLA高速运行实用技术栈，逼近人类操作速度。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">DFM-VLA: Iterative Action Refinement for Robot Manipulation via Discrete Flow Matching</span></div><div class="paper-meta"><span class="id">2603.26320</span><span class="author">Jiayi Chen, Haoang Li et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>离散流匹配迭代动作细化，LIBERO 95.7%，CALVIN平均长度4.44。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Fast-dVLA: Accelerating Discrete Diffusion VLA to Real-Time Performance</span></div><div class="paper-meta"><span class="id">2603.25661</span><span class="author">Wenxuan Song, Donglin Wang et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>参数空间辅助目标解耦，标准SFT简洁实现辅助训练增强效果。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">VideoWeaver: Multimodal Multi-View Video-to-Video Transfer for Embodied Agents</span></div><div class="paper-meta"><span class="id">2603.25420</span><span class="author">George Eskandar, Yang Bai et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>首个多视角V2V翻译框架，支持ego和异构相机设置一致性翻译。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">MMaDA-VLA: Large Diffusion Vision-Language-Action Model with Unified Multi-Modal Instruction and Generation</span><span class="paper-badge star">⭐SOTA</span></div><div class="paper-meta"><span class="id">2603.25406</span><span class="author">Yang Liu, Donglin Wang et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>统一离散扩散VLA，LIBERO 98.0%，CALVIN 4.78，刷新SOTA。</div></div>
+    </div>
+  </div>
+
+  <!-- D6 -->
+  <div class="paper-section" id="d6" onclick="toggleDir(this)">
+    <div class="paper-section-header">
+      <div class="dir-icon" style="background:rgba(245,158,11,0.15);color:#fbbf24;">🧪</div>
+      <div class="dir-info"><h2>方向六：仿真、数据与平台</h2><p>robotic simulation · embodied benchmark · x-embodiment · teleoperation dataset</p></div>
+      <span class="dir-count">2篇</span>
+      <span class="dir-arrow">▶</span>
+    </div>
+    <div class="paper-section-body">
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">V-Dreamer: Automating Robotic Simulation and Trajectory Synthesis via Video Generation Priors</span></div><div class="paper-meta"><span class="id">2603.18811</span><span class="author">Songjia He et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>LLM+3D生成全自动构建物理3D场景，视频运动先验合成可执行轨迹，Piper臂验证Sim-to-Real。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Fire as a Service: Augmenting Robot Simulators with Thermally and Visually Accurate Fire Dynamics</span></div><div class="paper-meta"><span class="id">2603.19063</span><span class="author">Anton R. Wagner et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>高保真火灾热力学仿真+体积烟雾，支持消防机器人遥操作训练。</div></div>
+    </div>
+  </div>
+
+  <!-- D7 -->
+  <div class="paper-section" id="d7" onclick="toggleDir(this)">
+    <div class="paper-section-header">
+      <div class="dir-icon" style="background:rgba(168,85,247,0.15);color:#c084fc;">🤝</div>
+      <div class="dir-info"><h2>方向七：人机交互与具身社会智能</h2><p>human-robot interaction · shared autonomy · assistive robotics · physical HRI</p></div>
+      <span class="dir-count">5篇</span>
+      <span class="dir-arrow">▶</span>
+    </div>
+    <div class="paper-section-body">
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">StretchBot: A Neuro-Symbolic Framework for Adaptive Guidance with Assistive Robots</span></div><div class="paper-meta"><span class="id">2604.00628</span><span class="author">Luca Vogelgesang et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>知识图谱+LLM推理，支持拉伸/康复指导的上下文自适应调整。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Users and Wizards in Conversations: How WoZ Interface Choices Define Human-Robot Interactions</span></div><div class="paper-meta"><span class="id">2603.28338</span><span class="author">Ekaterina Torubarova, Andre Pereira</span></div><div class="paper-contrib"><strong>核心贡献：</strong>VR遥现界面在用户偏好和社会存在感上均最优，倡导WoZ研究更多采用遥现接口。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">Control Without Control: Defining Implicit Interaction Paradigms for Autonomous Assistive Robots</span><span class="paper-badge star">⭐新范式</span></div><div class="paper-meta"><span class="id">2603.28079</span><span class="author">Janavi Gupta, Zackory Erickson et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>基于自然行为线索的隐式控制范式，保留用户控制感，减少感知工作量。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">A Minimum-Energy Control Approach for Redundant Mobile Manipulators in Physical Human-Robot Interaction</span></div><div class="paper-meta"><span class="id">2603.25259</span><span class="author">Davide Tebaldi et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>移动操作臂最小动能控制器，降低系统动能存储并提升pHRI性能。</div></div>
+      <div class="paper-card"><div class="paper-header"><span class="paper-title">DiSCo: Diffusion Sequence Copilots for Shared Autonomy</span></div><div class="paper-meta"><span class="id">2603.22787</span><span class="author">Andy Wang et al.</span></div><div class="paper-contrib"><strong>核心贡献：</strong>扩散策略+共享autonomy，以用户历史动作种子扩散过程，驾驶和机械臂任务显著提效。</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 4: GITHUB ===== -->
+<div class="section" id="tab-github">
+  <p style="color:var(--text-secondary);font-size:13px;margin-bottom:1.5rem;">本周新建仓库精选 + 经典仓库持续活跃项目。</p>
+
+  <div class="section-divider"><span>🏆 本周 GitHub Top 3</span></div>
+  <div class="trend-grid" style="margin-bottom:1.5rem;">
+    <div class="trend-card c1" style="border-color:rgba(245,158,11,0.3);">
+      <h4>🥇 GENESIS-EMBODIED-AI/GENESIS</h4>
+      <p>28.4k⭐，生成式机器人具身AI学习世界，开创生成式仿真新范式</p>
+      <div class="trend-tags"><span class="t-tag">28.4k⭐</span><span class="t-tag">仿真平台</span><span class="t-tag">本周最热</span></div>
+    </div>
+    <div class="trend-card c2" style="border-color:rgba(244,63,94,0.3);">
+      <h4>🥈 x-zheng16/Awesome-Embodied-AI-Safety</h4>
+      <p>具身AI安全综述，400+论文，涵盖感知/认知/规划/交互/智能体系统风险</p>
+      <div class="trend-tags"><span class="t-tag">50⭐</span><span class="t-tag">安全综述</span><span class="t-tag">400+论文</span></div>
+    </div>
+    <div class="trend-card c3" style="border-color:rgba(59,130,246,0.3);">
+      <h4>🥉 jtydhr88/ComfyUI-Kimodo</h4>
+      <p>NVIDIA Kimodo运动扩散模型ComfyUI集成，文本→高质量3D人体/人形运动</p>
+      <div class="trend-tags"><span class="t-tag">18⭐</span><span class="t-tag">运动扩散</span><span class="t-tag">NVIDIA</span></div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>🆕 本周新建仓库精选</span></div>
+
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/GENESIS-EMBODIED-AI/GENESIS" target="_blank">GENESIS-EMBODIED-AI/GENESIS</a><span class="repo-stars">★ 28.4k</span></div><div class="repo-desc">生成式机器人具身AI学习世界 — 本周全领域最热项目</div><div class="repo-tags"><span class="repo-tag">仿真平台</span><span class="repo-tag">生成式AI</span><span class="repo-tag">本周最热</span></div></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/x-zheng16/Awesome-Embodied-AI-Safety" target="_blank">x-zheng16/Awesome-Embodied-AI-Safety</a><span class="repo-stars">★ 50</span></div><div class="repo-desc">具身AI安全综述：400+论文，涵盖感知/认知/规划/交互/智能体系统风险</div><div class="repo-tags"><span class="repo-tag">安全</span><span class="repo-tag">综述</span><span class="repo-tag">强烈推荐</span></div></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/jtydhr88/ComfyUI-Kimodo" target="_blank">jtydhr88/ComfyUI-Kimodo</a><span class="repo-stars">★ 18</span></div><div class="repo-desc">ComfyUI插件集成NVIDIA Kimodo运动扩散模型，文本→高质量3D人体/人形运动</div><div class="repo-tags"><span class="repo-tag">运动扩散</span><span class="repo-tag">NVIDIA</span><span class="repo-tag">Python</span></div></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/0xNickdev/neurolobster" target="_blank">0xNickdev/neurolobster</a><span class="repo-stars">★ 26</span></div><div class="repo-desc">真实神经动力学（龙虾STG）驱动物理机器人，而非逼近行为——神经形态具身新范式</div><div class="repo-tags"><span class="repo-tag">神经形态</span><span class="repo-tag">新范式</span><span class="repo-tag">Python</span></div></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/hcr-lab/Smalltalk-KG" target="_blank">hcr-lab/Smalltalk-KG</a><span class="repo-stars">★ 1</span></div><div class="repo-desc">知识图谱+个性化长期对话记忆的人机交互框架</div><div class="repo-tags"><span class="repo-tag">知识图谱</span><span class="repo-tag">HRI</span><span class="repo-tag">Python</span></div></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/ninja-otaku/neuropose" target="_blank">ninja-otaku/neuropose</a><span class="repo-stars">★ 1</span></div><div class="repo-desc">人体姿态→机器人运动策略桥接：从 webcam demo 模仿学习（零成本遥操作）</div><div class="repo-tags"><span class="repo-tag">遥操作</span><span class="repo-tag">模仿学习</span><span class="repo-tag">Python</span></div></div>
+
+  <div class="section-divider"><span>🔥 经典VLA仓库</span></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/JonyZhang2023/AWESOME-EMBODIED-VLA-VA-VLN" target="_blank">JonyZhang2023/AWESOME-EMBODIED-VLA-VA-VLN</a><span class="repo-stars">★ 2.9k</span></div><div class="repo-desc">具身AI/VLA/VLN最新研究精选列表</div><div class="repo-tags"><span class="repo-tag">论文列表</span><span class="repo-tag">必收藏</span></div></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/OPEN-GIGAAI/GIGA-BRAIN-0" target="_blank">OPEN-GIGAAI/GIGA-BRAIN-0</a><span class="repo-stars">★ 2.5k</span></div><div class="repo-desc">世界模型驱动的视觉-语言-动作模型</div><div class="repo-tags"><span class="repo-tag">VLA</span><span class="repo-tag">世界模型</span></div></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/OPENHELIX-TEAM/VLA-ADAPTER" target="_blank">OPENHELIX-TEAM/VLA-ADAPTER</a><span class="repo-stars">★ 2.1k</span></div><div class="repo-desc">VLA-Adapter: 小规模VLA高效微调范式</div><div class="repo-tags"><span class="repo-tag">高效微调</span><span class="repo-tag">VLA</span></div></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/showlab/SHOWUI" target="_blank">showlab/SHOWUI</a><span class="repo-stars">★ 1.8k</span></div><div class="repo-desc">[CVPR 2025] 开源端到端VLA用于GUI智能体/计算机使用</div><div class="repo-tags"><span class="repo-tag">GUI智能体</span><span class="repo-tag">CVPR 2025</span></div></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/AllenzRen/OPEN-PI-ZERO" target="_blank">AllenzRen/OPEN-PI-ZERO</a><span class="repo-stars">★ 1.4k</span></div><div class="repo-desc">Physical Intelligence pi0 VLA复现</div><div class="repo-tags"><span class="repo-tag">pi0</span><span class="repo-tag">复现</span></div></div>
+
+  <div class="section-divider"><span>🔥 经典世界模型+RL仓库</span></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/DANIJAR/DREAMERV2" target="_blank">DANIJAR/DREAMERV2</a><span class="repo-stars">★ 1k</span></div><div class="repo-desc">DreamerV2: 离散世界模型掌握Atari</div><div class="repo-tags"><span class="repo-tag">世界模型</span><span class="repo-tag">经典</span></div></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/THU-ML/RoboticsDiffusionTransformer" target="_blank">THU-ML/RoboticsDiffusionTransformer</a><span class="repo-stars">★ 1.7k</span></div><div class="repo-desc">RDT-1B：双臂操作扩散基础模型</div><div class="repo-tags"><span class="repo-tag">扩散策略</span><span class="repo-tag">双臂</span></div></div>
+  <div class="repo-card"><div class="repo-top"><a class="repo-name" href="https://github.com/NICKLASHANSEN/TDMPC2" target="_blank">NICKLASHANSEN/TDMPC2</a><span class="repo-stars">★ 780</span></div><div class="repo-desc">TD-MPC2: 可扩展鲁棒世界模型连续控制</div><div class="repo-tags"><span class="repo-tag">世界模型</span><span class="repo-tag">连续控制</span></div></div>
+</div>
+
+<!-- ===== TAB 5: INSIGHTS ===== -->
+<div class="section" id="tab-insights">
+  <div class="trend-section">
+    <h3>💡 本周五大核心洞察</h3>
+    <div class="trend-grid">
+      <div class="trend-card c1">
+        <h4>VLA 从"暴力扩展"转向"精细设计"</h4>
+        <p>DIAL通过System-2/1解耦实现10x数据效率，FocusVLA揭示瓶颈在视觉利用而非表征，Fast-dVLA用参数差值替代辅助损失。三篇共同指向：VLA下一波突破来自<strong>架构设计</strong>，而非增大参数。</p>
+        <div class="trend-tags"><span class="t-tag">DIAL</span><span class="t-tag">FocusVLA</span><span class="t-tag">Fast-dVLA</span></div>
+      </div>
+      <div class="trend-card c2">
+        <h4>扩散策略全链路渗透</h4>
+        <p>从动作生成（RDT-1B、DFM-VLA）→ 运动先验（ComfyUI-Kimodo）→ 世界模型（unified-world-model）→ 共享autonomy（DiSCo）→ 模仿学习（FlowRL taxonomy），扩散已成为具身智能的"通用语言"。</p>
+        <div class="trend-tags"><span class="t-tag">RDT-1B</span><span class="t-tag">DFM-VLA</span><span class="t-tag">FlowRL</span></div>
+      </div>
+      <div class="trend-card c3">
+        <h4>具身AI安全从隐到显</h4>
+        <p>VLM affordance gap实证研究 + 400+论文安全综述 + DID-SAFETY-SYSTEM + DREAMDOJO-AEGIS-SDK，安全正成为独立研究方向而非附属于感知或规划。</p>
+        <div class="trend-tags"><span class="t-tag">Safety</span><span class="t-tag">VLM Limits</span><span class="t-tag">综述</span></div>
+      </div>
+      <div class="trend-card c4">
+        <h4>人形机器人成为数据效率研究主战场</h4>
+        <p>Unitree G1（Active Stereo）、GR1（DIAL零样本泛化）等通用形态人形机器人，成为验证少样本/零样本/跨任务方法的最佳载体，与本周VLA架构设计趋势深度交织。</p>
+        <div class="trend-tags"><span class="t-tag">Unitree G1</span><span class="t-tag">GR1</span><span class="t-tag">DIAL</span></div>
+      </div>
+      <div class="trend-card c5">
+        <h4>触觉+世界模型成为新组合</h4>
+        <p>OmniVTA（视触觉世界模型）、LOME（自我中心视频）、TAG（触觉反馈手套）、Neurolobster（神经形态）均指向：多模态感知→世界模型→精细控制的闭环正在形成。</p>
+        <div class="trend-tags"><span class="t-tag">OmniVTA</span><span class="t-tag">LOME</span><span class="t-tag">TAG</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trend-section">
+    <h3>🔮 下周值得关注的动向</h3>
+    <div class="trend-grid">
+      <div class="trend-card c1">
+        <h4>DIAL 复现进展</h4>
+        <p>System-2/1 解耦范式可能引发一波跟进工作，OPEN-PI-ZERO 已开始活跃</p>
+      </div>
+      <div class="trend-card c2">
+        <h4>GENESIS 实际性能验证</h4>
+        <p>28.4k⭐的生成式仿真平台能否兑现承诺，与 V-Dreamer 形成竞争</p>
+      </div>
+      <div class="trend-card c3">
+        <h4>Neurolobster 神经形态路线</h4>
+        <p>真实神经动力学驱动机器人 vs 深度学习逼近，谁更有前景？值得跟踪</p>
+      </div>
+      <div class="trend-card c4">
+        <h4>Awesome-Embodied-AI-Safety 社区</h4>
+        <p>安全综述可能催生安全导向的具身智能研究社区</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  本报告由 <a href="#">WorkBuddy</a> 自动生成 | arxiv-watcher + github-trending skill 联合驱动<br>
+  数据来源：arXiv API（31篇）+ GitHub API/Search（30+仓库） · 生成时间：2026-04-02
+</footer>
+
+<button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ===== TABS =====
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  if (id === 'charts') setTimeout(initCharts, 50);
+}
+
+// ===== DIRECTION TOGGLE =====
+function toggleDir(el) { el.classList.toggle('expanded'); }
+function expandDir(id) { document.getElementById(id).classList.add('expanded'); }
+
+// ===== CHARTS =====
+let chartsInitialized = false;
+function initCharts() {
+  if (chartsInitialized) return;
+  chartsInitialized = true;
+
+  const palette = ['#f97316','#7c3aed','#10b981','#c084fc','#3b82f6','#06b6d4','#f59e0b'];
+  const dirs = ['VLA (9)','具身控制 (9)','决策规划 (5)','人机交互 (5)','世界模型 (4)','具身感知 (2)','仿真平台 (2)'];
+
+  // Pie chart
+  new Chart(document.getElementById('pieChart'), {
+    type: 'doughnut',
+    data: {
+      labels: dirs,
+      datasets: [{
+        data: [9, 9, 5, 5, 4, 2, 2],
+        backgroundColor: palette,
+        borderColor: '#0a0e17',
+        borderWidth: 3,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { color: '#8b99b0', font: { size: 11 }, padding: 12, boxWidth: 12 } } }
+    }
+  });
+
+  // Bar chart - GitHub stars
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels: ['GENESIS','Awesome VLA\nList','GigaBrain\n-0','VLA\nAdapter','ShowUI','RDT-1B','Dream\nDojo','DreamerV2','TDMPC2'],
+      datasets: [{
+        label: 'GitHub Stars',
+        data: [28400, 2900, 2500, 2100, 1800, 1700, 679, 1000, 780],
+        backgroundColor: ['#f59e0b','#7c3aed','#7c3aed','#7c3aed','#3b82f6','#f97316','#f97316','#3b82f6','#3b82f6'],
+        borderRadius: 6, borderSkipped: false
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: '#1e2d45' }, ticks: { color: '#8b99b0', callback: v => v >= 1000 ? (v/1000).toFixed(0)+'k' : v } },
+        y: { grid: { display: false }, ticks: { color: '#8b99b0', font: { size: 11 } } }
+      }
+    }
+  });
+
+  // Daily bar chart
+  const dailyLabels = ['3/26','3/27','3/28','3/29','3/30','3/31','4/1','4/2'];
+  const dailyData = [4, 5, 0, 4, 5, 4, 3, 3];
+  const dailyColors = dailyData.map(v => v === 0 ? '#2a2a3a' : '#7c3aed');
+  new Chart(document.getElementById('dailyChart'), {
+    type: 'bar',
+    data: {
+      labels: dailyLabels,
+      datasets: [{
+        label: '论文数',
+        data: dailyData,
+        backgroundColor: dailyColors,
+        borderRadius: 6, borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#8b99b0' } },
+        y: { grid: { color: '#1e2d45' }, ticks: { color: '#8b99b0', stepSize: 1 }, title: { display: true, text: '论文数', color: '#8b99b0' } }
+      }
+    }
+  });
+}
+
+// Auto-init overview charts on load for pie chart preview
+document.addEventListener('DOMContentLoaded', () => {
+  // Pre-expand first 2 directions
+  setTimeout(() => {
+    document.querySelectorAll('.paper-section').forEach((el, i) => { if (i < 2) el.classList.add('expanded'); });
+  }, 300);
+});
+</script>
+</body>
+</html>
